@@ -1,0 +1,28 @@
+let myVoca = {
+    // 각 메소드들도 하나의 프로퍼티므로 ,구분!
+    addVoca : function(word, meaning){
+      myVoca[word] = meaning 
+      //.word면 word라는 key를 찾는 것이 됨, 변수일 땐 []로 접근! (함수 케이스)
+    },
+    deleteVoca : function(word){
+      delete myVoca[word]
+    },
+    printVoca : function(word){
+      console.log(`"${word}"의 뜻은 "${myVoca[word]}"입니다.`)
+    }
+  
+  };
+  
+  // addVoca메소드 테스트 코드
+  myVoca.addVoca('parameter', '매개 변수');
+  myVoca.addVoca('element', '요소');
+  myVoca.addVoca('property', '속성');
+  console.log(myVoca);
+  
+  // deleteVoca메소드 테스트 코드
+  myVoca.deleteVoca('parameter');
+  myVoca.deleteVoca('element');
+  console.log(myVoca);
+  
+  // printVoca메소드 테스트 코드
+  myVoca.printVoca('property');
