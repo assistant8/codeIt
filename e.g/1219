@@ -1,0 +1,25 @@
+function teraToGiga(a) {
+  console.log(a+'TB는')
+  console.log(a*1024+'GB 입니다.')
+}
+
+function teraToMega(b) {
+  console.log(b+'TB는')
+  console.log((b*1024*1024)+'MB 입니다.')
+}
+
+// TB -> GB 테스트
+teraToGiga(2);
+// TB -> MB 테스트
+teraToMega(2);
+
+function calcWage(name, time, wage) {
+  let total = time * wage;
+
+  console.log(`${name}님의 근무 시간은 총 ${time}시간이며, 최종 급여는 ${total}원 입니다.`); // 괄호 안에 코드를 채워 넣으세요
+}
+
+calcWage('김윤식', 208, 11340);
+calcWage('성규재', 175, 12160);
+calcWage('손태웅', 161, 13070);
+calcWage('허우선', 222, 10980);
