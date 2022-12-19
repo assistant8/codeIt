@@ -1,0 +1,26 @@
+let i = 0
+let a=1;
+let b=1;
+let c;
+for(i=0;i<50;i++){
+  if(i==0||i==1) console.log(1)
+  else{
+    c=a+b
+    console.log(c)
+    a=b;
+    b=c;
+  }
+
+}
+
+
+
+// let current = 1;
+// let previous = 0;
+
+// for (let i = 1; i <= 10; i++) {
+//   console.log(current);
+//   let temp = previous; // previous를 임시 보관소 temp에 저장
+//   previous = current;
+//   current = current + temp; // temp에는 기존 previous 값이 저장돼 있음
+// }
