@@ -1,0 +1,41 @@
+// 투표 결과 리스트
+let votes = [
+  '이재식', '이재식', '이규하', '이규하', '이규하',
+  '이재식', '이재식', '이규하', '이규하', '이재식',
+  '이규하', '이규하', '이규하', '이규하', '이재식',
+  '이재식', '이규하', '이재식', '이재식', '이재식',
+  '이재식', '이재식', '이규하', '이규하', '이규하',
+  '이규하', '이규하', '이재식', '이규하', '이규하',
+  '이규하', '이규하', '이재식', '이규하', '이규하',
+  '이규하', '이재식', '이재식', '이재식', '이규하',
+];
+
+// 후보별 득표수 객체
+let voteCounter = {};
+
+let count1 = 0
+let count2 = 0
+// votes 배열을 이용해서 voteCounter 객체를 정리하기
+for (let name of votes) {
+  // 여기에 코드를 작성하세요
+  if(name=='이규하') count1++;
+  else if(name=='이재식') count2++;
+}
+voteCounter['이재식']=count2
+voteCounter['이규하']=count1
+
+
+
+// 후보별 득표수 출력
+console.log(voteCounter);
+
+
+
+// for (let name of votes) {
+//   // 여기에 코드를 작성하세요
+//   if (name in voteCounter) {
+//     voteCounter[name]+= 1;
+//   } else {
+//     voteCounter[name] = 1;
+//   }
+// }

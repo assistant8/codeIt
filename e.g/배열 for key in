@@ -1,0 +1,6 @@
+let dataType = ['number', 'string', 'boolean', 'null', 'undefined', 'object'];
+
+// 배열도 객체처럼 key가 인덱스가 되어 for key in 가능!
+for(key in dataType) {
+  console.log(dataType[key])
+}
