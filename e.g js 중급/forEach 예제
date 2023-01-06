@@ -1,0 +1,46 @@
+
+const members = [1,2,3,4]
+
+for(let member of members) {
+    console.log(member)
+}
+
+//for of 문을 forEach로 전환함
+members.forEach(function (member){
+    console.log(member)
+})
+
+//애로우 펑션으로 전환함
+members.forEach((member, index, arr) => {
+    console.log(index, member, arr)
+})
+//member는 배열의 요소가 전달됨
+//index는 각 요소의 인덱스
+//arr는 반복중인 배열 자체 = members, 잘 사용은 안됨
+
+console.log('\n\n')
+
+//map은 함수 결과로 새로운 배열이 리턴됨
+//그거말곤 forEach와 동일, 위에 map 넣어도 그대로 동작
+const firstName = [1,2,3,4]
+const lastName = [10,20,30,40]
+
+firstName.map((names, i) => {
+    console.log(names, lastName[i])
+})
+
+const fullName1 = firstName.map((names, i) => {
+    return names + lastName[i]
+ })
+
+//애로우로 간결하게
+const fullName = firstName.map((names, i) => names + lastName[i])
+
+console.log(fullName)
+
+
+//배열의 단순 반복작업 = forEach
+//배열 반복작업으로 새로운 배열을 뽑기 위한 = map
+//members.pop() 처럼 반복 중에 배열의 길이가 줄어들면 반복도 그만큼 줄어들음
+//members.push()로 배열 길이 늘어나는건 기존 member 배열 길이만큼만 반복함
+//기본적으로 배열의 개수만큼 반복함
