@@ -1,0 +1,6 @@
+numbers = [1,2,5,7]
+const everyReturn = numbers.every((el)=>{
+    return el > 5
+})
+
+console.log(everyReturn)
