@@ -1,0 +1,24 @@
+const spait = [
+  { codeName: 'ApplePie', members: ['스파이', '스파이', '스파이', '스파이', '스파이'] },
+  { codeName: 'BigBoss', members: ['스파이', '스파이', '스과이', '스파이', '스파이'] },
+  { codeName: 'CEO', members: ['스파이', '스파이', '스파이', '습하이', '스파이'] },
+  { codeName: 'DeathNote', members: ['스파이', '스파이', '스파이', '스파이', '스파이'] },
+  { codeName: 'EarlyBird', members: ['스파이', '스마이', '스파이', '스파이', '스파이'] },
+  { codeName: 'Faker', members: ['스파이', '스파이', '스파이', '스파이', '스파이'] },
+];
+
+function checkSpy(team) { //team은 스파잇 배열에서 각 요소 하나하나
+  // 여기에 코드를 작성하세요
+  const every = team.members.every((a)=>{
+    return a=='스파이' //이 조건이 맞는지 every 요소 체크해봐라
+  })
+  
+  if(every==false) message=`[주의!] 팀 ${team.codeName} 에 이중 스파이가 있습니다!`
+  else message = `팀 ${team.codeName} 에는 이중 스파이가 없습니다.`
+
+	console.log(message);
+}
+
+// 테스트 코드
+spait.forEach((team) => checkSpy(team)); 
+//위 spait 배열을 forEach로 각 요소를 파라미터에 넣어 checkSpy 함수 돌림
