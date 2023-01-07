@@ -1,0 +1,21 @@
+function createUser (name, birth) {
+    const user = {
+        name,
+        birth,
+        buySome(item) {
+            console.log(`${this.name} born ${this.birth} buy ${item.names}`)
+        }
+    }
+    return user;
+}
+
+const item = {
+    names : 'apple',
+    price : 15
+}
+
+const user1 = createUser('John', 2000)
+const user2 = createUser('Park', 2001)
+
+console.log(user1.name)
+user1.buySome(item)
