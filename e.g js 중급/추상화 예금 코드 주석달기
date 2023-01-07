@@ -1,0 +1,28 @@
+class BankAccount {
+  constructor(name, money) { //입금자명, 돈
+    this.holder = name;
+    this.balance = money;
+  }
+
+  deposit(money) { //예금 시 잔금+예금 돈
+    this.balance += money;
+  }
+
+  withdraw(money) {//출금 시 잔금-출금 돈
+    if (this.balance - money < 0) {
+      console.log('Insufficient balance');
+    } else {
+      this.balance -= money;
+    }
+  }
+
+  transfer(money, anotherAccount) { //이체, 기존계좌-돈, 옮길계좌+돈
+    const account = anotherAccount;
+    if (this.balance - money < 0) {
+      console.log('Insufficient balance');
+    } else {
+      this.balance -= money;
+      account.balance += money;
+    }
+  }
+}
