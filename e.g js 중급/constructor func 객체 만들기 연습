@@ -1,0 +1,18 @@
+function User(name, birth) { //첫 문자가 대문자 = 관습
+    this.name = name, // 객체 형식이 아니므로 =로 할당, this를 꼭붙이네?
+    this.birth = birth,
+    this.buySome = function (item) {
+        console.log(`${this.name} born ${this.birth} buy ${item.names}`)
+    }
+}
+
+const item = {
+    names : 'apple',
+    price : 15
+}
+
+const user1 = new User("John", 2000)
+const user2 = new User("park", 2010) //new를 붙인다
+
+console.log(user1.name)
+user1.buySome(item)

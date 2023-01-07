@@ -1,12 +1,13 @@
 function createUser (name, birth) {
-    const user = {
-        name,
+    const user = { //이 블록은 객체 그 자체, 선언
+        name, //name : name 을 간소화 한 것, 동일하므로
         birth,
         buySome(item) {
             console.log(`${this.name} born ${this.birth} buy ${item.names}`)
         }
+        //함수 역시 간소화 표현, this는 이걸 콜한 객체(user)를 가리킴
     }
-    return user;
+    return user; //이 선언된 객체를 리턴하겠다
 }
 
 const item = {
@@ -14,7 +15,8 @@ const item = {
     price : 15
 }
 
-const user1 = createUser('John', 2000)
+//함수 콜해서 리턴값으로 객체 받음
+const user1 = createUser('John', 2000) 
 const user2 = createUser('Park', 2001)
 
 console.log(user1.name)
