@@ -1,0 +1,13 @@
+// 모든 json 데이터 다 출력
+// fetch('https://learn.codeit.kr/api/topics')
+//   .then((response) => response.text())
+//   .then((result) => { console.log(result) }) 
+
+//초급만 걸러져서 나옴
+fetch('https://learn.codeit.kr/api/topics')
+  .then((response) => response.text())
+  .then((result) => {
+    const topics = JSON.parse(result) //filter 함수 쓰기 위해 배열 형태로 바꿈
+    const beginnerLevelTopics = topics.filter((topic) => topic.difficulty === '초급');
+    console.log(beginnerLevelTopics);
+  });
