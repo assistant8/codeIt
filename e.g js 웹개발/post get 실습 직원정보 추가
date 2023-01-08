@@ -1,0 +1,20 @@
+// 새 직원 정보는 원하는 대로 작성하세요
+const newMember = {
+  name: "조수하",
+  email: "dlrhdcjs@naver.com",
+	department: "sw"
+};
+
+
+fetch('https://learn.codeit.kr/api/members', {
+  method: 'POST',
+  body: JSON.stringify(newMember)
+}) //추가 한다
+  .then(() => { //추가 완료되면 실행될 콜백함수
+    fetch('https://learn.codeit.kr/api/members') //조회겠지
+      .then((response) => response.text())
+      .then((result) => { //result는 전체 멤버 json 형식
+        const members = JSON.parse(result) //json -> 객체 
+        console.log(members[members.length - 1]); //객체의 마지막(추가 시 맨 마지막에 추가되더라)
+      });
+  });
