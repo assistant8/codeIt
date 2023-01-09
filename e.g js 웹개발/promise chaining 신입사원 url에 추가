@@ -1,0 +1,23 @@
+fetch('https://learn.codeit.kr/api/interviews/summer')
+  .then((response) => response.json()) //비직렬화 안하고 바로 사용 가능
+  .then((interviewResult) => {
+    const { interviewees } = interviewResult;
+    const newMembers = interviewees.filter((interviewee) => interviewee.result === 'pass');
+    return newMembers; //객체 (배열임)
+  }) //여기에서 합격한 멤버 선별하여 GET 해서 배열로 리턴
+  .then((newMembers) => fetch('https://learn.codeit.kr/api/members', {
+    method: 'POST',
+    body: JSON.stringify(newMembers) 
+  })) // json 형식으로 바꿔서 멤버사이트에 추가 함
+  .then((response) => { // !! post 한 결과의 response는 undefined
+    if (response.status === 200) { //정상적으로 추가됐다
+      return fetch('https://learn.codeit.kr/api/members') //전체 멤버 조회
+    } else {
+      throw new Error('New members not added');
+    }
+  }) //잘 추가 된거 확인하고 최신화된 회사 전멤버 url fetch
+  .then((response) => response.json())
+  .then((members) => {
+    console.log(`총 직원 수: ${members.length}`);
+    console.log(members);
+  }); //총 직원 수 + 새로운 멤버들 출력
