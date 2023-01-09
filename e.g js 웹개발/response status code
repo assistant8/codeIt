@@ -1,0 +1,4 @@
+fetch('https://www.google.com/1242312')
+  .then((response) => {
+    console.log(response.status);
+  });
