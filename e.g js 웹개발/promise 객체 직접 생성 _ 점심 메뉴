@@ -1,0 +1,37 @@
+function pick(menus) { //아래 getRandomMenu에서 쓰이는 함수
+    console.log('Pick random menu!');
+    const p = new Promise((resolve, reject) => { //두 파라미터
+      if (menus.length === 0) { //다른 이유가 아닌 메뉴가 없을 때 reject를 수동적으로 시키겠다
+        reject(new Error('Need Candidates'));
+      } else {
+        setTimeout(() => {
+          const randomIdx = Math.floor(Math.random() * menus.length);
+          const selectedMenu = menus[randomIdx];
+          // resolve는 Promise 객체를 직접 만들 때, 생성된 Promise 객체를 fulfilled 상태로 만들어, 파라미터로 성공 결과를 전달
+          resolve(selectedMenu)
+        }, 1000); // 시간이 걸리는 걸 시뮬레이션하기 위한 1초입니다
+      }
+    });
+    return p; //프로미스 객체
+  }
+  
+  function getRandomMenu() {
+    return fetch('https://learn.codeit.kr/api/menus')
+      .then((response) => response.json())
+      .then((result) => {
+        const menus = result;
+        return pick(menus); // ! random pick function 
+        //프로미스 객체 리턴
+      });
+  }
+  
+  getRandomMenu() //위에서 프로미스 객체 리턴
+    .then((menu) => {
+      console.log(`Today's lunch is ${menu.name} ~`);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    })
+    .finally(() => {
+      console.log('Random Menu candidates change everyday');
+    });
