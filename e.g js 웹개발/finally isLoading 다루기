@@ -1,0 +1,30 @@
+let isLoading = true;
+
+/* ..다른 코드들 */
+
+// const url = 'https://jsonplaceholder.typicode.com/users'; //fulfilled 될 url
+const url = 'https://www.google.com'; //rej 될 url
+
+fetch(url)
+  .then((response) => {
+    const contentType = response.headers.get('content-type');
+    if (contentType.includes('application/json')) {
+      return response.json();
+    }
+    throw new Error('response is not json data');
+  }) //json 포함 시 리턴, 아님 에러
+  .then((result) => {
+  // 리스폰스 처리
+    console.log(result);
+  })
+  .catch((error) => {
+  // 에러 처리
+    console.log(error);
+  })
+  .finally(()=>{
+    isLoading = false;
+    console.log(isLoading) //가장 마지막 위 모든게 끝났으니 false
+  })
+
+console.log(isLoading) //가장 먼저 실행되네, true임, 위 fetch가 진행되는 중임
+/* ..다른 코드들 */
