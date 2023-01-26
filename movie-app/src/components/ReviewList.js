@@ -1,6 +1,13 @@
-function ReviewList ({item}) {
-    console.log(item)
-    return <li></li>
+function ReviewList ({items}) {
+    return (
+        <div>
+            <ul>
+                {items.map((item) => {
+                    return <li>{item.title}</li>
+                })}
+            </ul>
+        </div>
+    )
 }
 
 export default ReviewList;

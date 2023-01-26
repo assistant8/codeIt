@@ -1,10 +1,10 @@
 import ReviewList from "./ReviewList";
-import item from "../mock.json"
+import items from "../mock.json"
 
 function App({}) {
   return (
     <div>
-      <ReviewList item={item} />
+      <ReviewList items={items} />
     </div>
   );
 }
