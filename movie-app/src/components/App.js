@@ -1,6 +1,6 @@
 import ReviewList from "./ReviewList";
 import mockItems from "../mock.json"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getReviews } from "../api";
 
 function App({}) {
@@ -16,11 +16,14 @@ function App({}) {
         setSort("id")
     }
 
-    //{} 이유는 json 안에 reviews라는 객체 안에 배열이 있기 때문
-    const handleJson = async() => { //비동기 함수임 표시
-        const {reviews} = await getReviews(); //promise 객체 리턴 코드임 표시
+    const handleJson = async() => { 
+        const {reviews} = await getReviews(); 
         setItems(reviews)
     }
+
+    useEffect(()=>{
+        handleJson();
+    },[])
 
    const handleDelete = (id) => { 
         console.log(11)
@@ -34,7 +37,6 @@ function App({}) {
         <div>
             <button onClick={handleRatingSort}>rating</button>
             <button onClick={handleIdSort}>id</button>
-            <button onClick={handleJson}>불러오기</button>
             <ReviewList items={sortedItem} onDelete={handleDelete}/> 
         </div>
     );
