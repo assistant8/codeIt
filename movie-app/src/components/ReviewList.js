@@ -20,8 +20,8 @@ function ReviewList ({items, onDelete}) { //App에서 받은 함수 다시 Revie
     return (
         <div>
             <ul>
-                {items.map((item, index) => {
-                    return <li key={index}>{<ReviewListItem item={item} onDelete={onDelete}/>} </li>
+                {items.map((item) => {
+                    return <li key={item.id}>{<ReviewListItem item={item} onDelete={onDelete}/>} </li>
                 })}
             </ul>
         </div>
