@@ -10,6 +10,7 @@ function App({}) {
     const [items, setItems] = useState([]) 
     const [hasNext, setHasNext] = useState(false) //
     const [offset, setOffset] = useState(0) //
+    const [isLoading, setIsLoading] = useState(false)
     const sortedItem = items.sort((a,b) => b[order]-a[order]) 
 
     const handleRatingSort = () => {
@@ -21,12 +22,22 @@ function App({}) {
     }
 
     const handleLoad = async(options) => { //현재 무슨 order 버튼
-        const {reviews, paging} = await getReviews(options); //이 함수 api에 review, paging 프로퍼티 존재
+        let result;
+        try {
+            setIsLoading(true)
+            result = await getReviews(options);
+        } catch(e) {
+            console.log(e)
+            return;
+        } finally {
+            setIsLoading(false)
+        }
+        const {reviews, paging} = result
         if(options.offset == 0){ //처음엔 0~5 
             setItems(reviews)
         }
         else{ //이전꺼 + reviews 
-            setItems([...items, ...reviews])
+            setItems((prevItems) => [...items, ...reviews])
         }
         setOffset(options.offset + options.limit) //offset = 기존+6 최신화
         setHasNext(paging.hasNext) //이다음 데이터있는지 paging에서 hasNext 확인
@@ -55,7 +66,7 @@ function App({}) {
                 <button onClick={handleIdSort}>id</button>
             </div>            
             <ReviewList items={sortedItem} onDelete={handleDelete}/> 
-            {hasNext && <button disabled={!hasNext} onClick={handleLoadMore}>더 보기</button>}
+            {hasNext && <button disabled={isLoading} onClick={handleLoadMore}>더 보기</button>}
         </div>
     ); //hasNext 있으면 button 렌더링 해라 or hasNext 아니면 버튼 투명화
 }
