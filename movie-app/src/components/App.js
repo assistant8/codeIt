@@ -3,9 +3,13 @@ import mockItems from "../mock.json"
 import { useEffect, useState } from "react";
 import { getReviews } from "../api";
 
+const LIMIT = 6; //상수
+
 function App({}) {
     const [order, setOrder] = useState("id")
-    const [items, setItems] = useState([]) //처음엔 데이터 안뜨게
+    const [items, setItems] = useState([]) 
+    const [hasNext, setHasNext] = useState(false) //
+    const [offset, setOffset] = useState(0) //
     const sortedItem = items.sort((a,b) => b[order]-a[order]) 
 
     const handleRatingSort = () => {
@@ -16,13 +20,25 @@ function App({}) {
         setOrder("id")
     }
 
-    const handleJson = async(options) => { //현재 무슨 order 버튼
-        const {reviews} = await getReviews(options); //order 형식 api에 넘겨줌(쿼리)
-        setItems(reviews)
+    const handleLoad = async(options) => { //현재 무슨 order 버튼
+        const {reviews, paging} = await getReviews(options); //이 함수 api에 review, paging 프로퍼티 존재
+        if(options.offset == 0){ //처음엔 0~5 
+            setItems(reviews)
+        }
+        else{ //이전꺼 + reviews 
+            setItems([...items, ...reviews])
+        }
+        setOffset(options.offset + options.limit) //offset = 기존+6 최신화
+        setHasNext(paging.hasNext) //이다음 데이터있는지 paging에서 hasNext 확인
+    }
+    //api response에 paging과 reviews 프로퍼티 존재
+
+    const handleLoadMore = async() => { //버튼 누르면 실행
+        await handleLoad({order, offset, limit:LIMIT}) //지정 offset~6개 불러옴
     }
 
     useEffect(()=>{
-        handleJson({order, offset:0, limit:6});
+        handleLoad({order, offset:0, limit:LIMIT});
     }, [order])
 
    const handleDelete = (id) => { 
@@ -34,11 +50,14 @@ function App({}) {
 
     return (
         <div>
-            <button onClick={handleRatingSort}>rating</button>
-            <button onClick={handleIdSort}>id</button>
+            <div>
+                <button onClick={handleRatingSort}>rating</button>
+                <button onClick={handleIdSort}>id</button>
+            </div>            
             <ReviewList items={sortedItem} onDelete={handleDelete}/> 
+            {hasNext && <button disabled={!hasNext} onClick={handleLoadMore}>더 보기</button>}
         </div>
-    );
+    ); //hasNext 있으면 button 렌더링 해라 or hasNext 아니면 버튼 투명화
 }
 
 export default App;
