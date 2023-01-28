@@ -16,18 +16,16 @@ function App({}) {
         setOrder("id")
     }
 
-    const handleJson = async(orderQuery) => { //현재 무슨 order 버튼
-        const {reviews} = await getReviews(orderQuery); //order 형식 api에 넘겨줌(쿼리)
+    const handleJson = async(options) => { //현재 무슨 order 버튼
+        const {reviews} = await getReviews(options); //order 형식 api에 넘겨줌(쿼리)
         setItems(reviews)
     }
 
-    //데이터 불러오기는 처음과 order가 변경되었을 때만!
     useEffect(()=>{
-        handleJson(order);
+        handleJson({order, offset:0, limit:6});
     }, [order])
 
    const handleDelete = (id) => { 
-        console.log(11)
         const newItems = items.filter((item)=>{ 
             return item.id !== id
         })
