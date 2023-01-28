@@ -8,9 +8,10 @@ const LIMIT = 6; //상수
 function App({}) {
     const [order, setOrder] = useState("id")
     const [items, setItems] = useState([]) 
-    const [hasNext, setHasNext] = useState(false) //
-    const [offset, setOffset] = useState(0) //
+    const [hasNext, setHasNext] = useState(false) 
+    const [offset, setOffset] = useState(0) 
     const [isLoading, setIsLoading] = useState(false)
+    const [loadingError, setLoadingError] = useState(null) //
     const sortedItem = items.sort((a,b) => b[order]-a[order]) 
 
     const handleRatingSort = () => {
@@ -21,15 +22,18 @@ function App({}) {
         setOrder("id")
     }
 
+    //try문 안에 json 받아오는 것과 그동안 setLoading 참으로 설정
     const handleLoad = async(options) => { //현재 무슨 order 버튼
         let result;
         try {
             setIsLoading(true)
+            setLoadingError(null)
             result = await getReviews(options);
         } catch(e) {
             console.log(e)
+            setLoadingError(e)
             return;
-        } finally {
+        } finally { 
             setIsLoading(false)
         }
         const {reviews, paging} = result
@@ -67,8 +71,9 @@ function App({}) {
             </div>            
             <ReviewList items={sortedItem} onDelete={handleDelete}/> 
             {hasNext && <button disabled={isLoading} onClick={handleLoadMore}>더 보기</button>}
+            {loadingError?.message && <span>{loadingError.message}</span>}
         </div>
-    ); //hasNext 있으면 button 렌더링 해라 or hasNext 아니면 버튼 투명화
+    ); //loadingError 메시지가 있으면 (catch에서 에러 메시지 받았으면) span 렌더링
 }
 
 export default App;
