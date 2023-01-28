@@ -4,26 +4,27 @@ import { useEffect, useState } from "react";
 import { getReviews } from "../api";
 
 function App({}) {
-    const [sort, setSort] = useState("id")
+    const [order, setOrder] = useState("id")
     const [items, setItems] = useState([]) //처음엔 데이터 안뜨게
-    const sortedItem = items.sort((a,b) => b[sort]-a[sort]) 
+    const sortedItem = items.sort((a,b) => b[order]-a[order]) 
 
     const handleRatingSort = () => {
-        setSort("rating")
+        setOrder("rating")
     }
 
     const handleIdSort = () => {
-        setSort("id")
+        setOrder("id")
     }
 
-    const handleJson = async() => { 
-        const {reviews} = await getReviews(); 
+    const handleJson = async(orderQuery) => { //현재 무슨 order 버튼
+        const {reviews} = await getReviews(orderQuery); //order 형식 api에 넘겨줌(쿼리)
         setItems(reviews)
     }
 
+    //데이터 불러오기는 처음과 order가 변경되었을 때만!
     useEffect(()=>{
-        handleJson();
-    },[])
+        handleJson(order);
+    }, [order])
 
    const handleDelete = (id) => { 
         console.log(11)
