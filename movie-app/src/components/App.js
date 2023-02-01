@@ -53,7 +53,7 @@ function App({}) {
     }
 
     useEffect(()=>{
-        handleLoad({order, offset:0, limit:LIMIT});
+        handleLoad({order, offset:0, limit:LIMIT}); //처음이라 order 변경시에만 발동
     }, [order])
 
    const handleDelete = (id) => { 
@@ -68,7 +68,7 @@ function App({}) {
             <div>
                 <button onClick={handleRatingSort}>rating</button>
                 <button onClick={handleIdSort}>id</button>
-            </div>            
+            </div>
             <ReviewList items={sortedItem} onDelete={handleDelete}/> 
             {hasNext && <button disabled={isLoading} onClick={handleLoadMore}>더 보기</button>}
             {loadingError?.message && <span>{loadingError.message}</span>}
