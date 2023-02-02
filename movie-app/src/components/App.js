@@ -2,6 +2,7 @@ import ReviewList from "./ReviewList";
 import mockItems from "../mock.json"
 import { useEffect, useState } from "react";
 import { getReviews } from "../api";
+import ReviewFrom from "./ReviewForm.js"
 
 const LIMIT = 6; //상수
 
@@ -11,7 +12,7 @@ function App({}) {
     const [hasNext, setHasNext] = useState(false) 
     const [offset, setOffset] = useState(0) 
     const [isLoading, setIsLoading] = useState(false)
-    const [loadingError, setLoadingError] = useState(null) //
+    const [loadingError, setLoadingError] = useState(null) 
     const sortedItem = items.sort((a,b) => b[order]-a[order]) 
 
     const handleRatingSort = () => {
@@ -69,11 +70,12 @@ function App({}) {
                 <button onClick={handleRatingSort}>rating</button>
                 <button onClick={handleIdSort}>id</button>
             </div>
+            <ReviewFrom />
             <ReviewList items={sortedItem} onDelete={handleDelete}/> 
             {hasNext && <button disabled={isLoading} onClick={handleLoadMore}>더 보기</button>}
             {loadingError?.message && <span>{loadingError.message}</span>}
         </div>
-    ); //loadingError 메시지가 있으면 (catch에서 에러 메시지 받았으면) span 렌더링
+    ); 
 }
 
 export default App;
