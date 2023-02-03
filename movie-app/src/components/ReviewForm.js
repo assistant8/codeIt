@@ -1,36 +1,41 @@
-import { useState } from "react";
-import FileInput from "./FileInput";
-import "./ReviewForm.css"
+import { useState } from 'react';
+import FileInput from './FileInput';
+import './ReviewForm.css';
 
 function ReviewForm() {
+  const [values, setValues] = useState({
+    title: '',
+    rating: 0,
+    content: '',
+    imgFile: null,
+  });
 
-    const [values, setValues] = useState({
-        title : "",
-        rating : 0,
-        content : ""
-    })
+  const handleChange = (name, value) => { //파일은 이거만 사용
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
 
-    const handleChange = (e) => {
-        const {name, value} = e.target; //target은 input 태그겠고, 그 안에 프로퍼티 name, value만 갖고 오겠다
-        //위는 방금 변경된 데이터
-        setValues({...values, [name]: value}) //변경 안된건 values에, 방금 이벤트 된 value를 추가
-    }
+  const handleInputChange = (e) => { //인풋들은 이거랑 위에도 사용
+    const { name, value } = e.target;
+    handleChange(name, value);
+  };
 
-    const handleSubmit = (e) => { 
-        e.preventDefault() // 원래 바로 전송되는 기본 성질 (페이지 초기화) 막기 위함
-        console.log(values)
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(values);
+  };
 
-    return (
-        <form className="ReviewForm" onSubmit={handleSubmit}> 
-            <FileInput />
-          <input name="title" value={values.title} onChange={handleChange} /> 
-          <input type="number" name="rating" value={values.rating} onChange={handleChange} />
-          <textarea name="content" value={values.content} onChange={handleChange} />
-          <button type="submit">전송</button>
-        </form> 
-    );
-    
+  return (
+    <form className="ReviewForm" onSubmit={handleSubmit}>
+      <FileInput name="imgFile" value={values.imgFile} onChange={handleChange} />
+      <input name="title" value={values.title} onChange={handleInputChange} />
+      <input type="number" name="rating" value={values.rating} onChange={handleInputChange} />
+      <textarea name="content" value={values.content} onChange={handleInputChange} />
+      <button type="submit">확인</button>
+    </form>
+  );
 }
 
 export default ReviewForm;
