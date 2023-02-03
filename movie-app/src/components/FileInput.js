@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function FileInput({ name, value, onChange }) { //value는 후에 미리보기 등으로 활용 가능해서 일단 받아놓음..
   const inputRef = useRef(); //현재 input 상태?
+  const [preview, setPreview] = useState(); //이미지 url 담을 변수
 
   const handleChange = (e) => {
     const nextValue = e.target.files[0];
@@ -16,8 +17,14 @@ function FileInput({ name, value, onChange }) { //value는 후에 미리보기 �
     }
   }
 
+  useEffect(()=>{
+    if(!value) return; //혹시 파일 없으면 아래 실행시 오류
+    setPreview(URL.createObjectURL(value)) //이미지 태그에 적용할 url    
+  }, [value])
+
   return (
     <div>
+        <img src={preview} alt="이미지 미리보기"></img>
         <input type="file" onChange={handleChange} ref={inputRef}/>
         {value && <button onClick={handleClearClick}> delete </button> }
     </div>
