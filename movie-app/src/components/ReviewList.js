@@ -1,4 +1,5 @@
 import "./ReviewList.css"
+import Rating from './Rating.js'
 
 function ReviewListItem ({item, onDelete}) { //ReviewList에서 받은 onDelete 여기서 handle~로 정의함 
     const handleDeleteClick = () => onDelete(item.id) //파라미터 (id) 받아와야하기 떄문
@@ -7,6 +8,7 @@ function ReviewListItem ({item, onDelete}) { //ReviewList에서 받은 onDelete 
             <img className="img1" src={item.imgUrl}></img>
             <div>
                 <p>id : {item.id}</p>
+                <Rating value={item.rating}/>
                 <p>rating : {item.rating}</p>
                 <p>{item.content}</p>
                 <button onClick={handleDeleteClick}>삭제</button>

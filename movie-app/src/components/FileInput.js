@@ -21,9 +21,9 @@ function FileInput({ name, value, onChange }) { //value는 후에 미리보기 �
     if(!value) return; //혹시 파일 없으면 아래 실행시 오류
     const nextPreview = URL.createObjectURL(value)
     setPreview(nextPreview) //이미지 태그에 적용할 url    
-    return () => {
-        setPreview()
-        URL.revokeObjectURL(nextPreview)
+    return () => { 
+        setPreview() //url 삭제하고
+        URL.revokeObjectURL(nextPreview) //메모리에서 삭제
     }
   }, [value])
 
