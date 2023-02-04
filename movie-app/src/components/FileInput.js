@@ -19,7 +19,12 @@ function FileInput({ name, value, onChange }) { //value는 후에 미리보기 �
 
   useEffect(()=>{
     if(!value) return; //혹시 파일 없으면 아래 실행시 오류
-    setPreview(URL.createObjectURL(value)) //이미지 태그에 적용할 url    
+    const nextPreview = URL.createObjectURL(value)
+    setPreview(nextPreview) //이미지 태그에 적용할 url    
+    return () => {
+        setPreview()
+        URL.revokeObjectURL(nextPreview)
+    }
   }, [value])
 
   return (
