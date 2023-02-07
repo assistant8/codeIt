@@ -1,20 +1,39 @@
-import './Rating.css'
+import "./Rating.css";
 
-const RATING = [1,2,3,4,5];
+const RATING = [1, 2, 3, 4, 5];
 
-function Star({selected = false}) {
-    const className = `Rating-star ${selected ? 'selected' : ''}`
-    return <span className={className}>★</span>
+function Star({ selected = false, rating, onSelect, onHover }) {
+  const className = `Rating-star ${selected ? "selected" : ""}`;
+
+  const handleClick = onSelect ? () => onSelect(rating) : undefined;
+
+  const handleMouseOver = onHover ? () => onHover(rating) : undefined;
+
+  return (
+    <span
+      className={className}
+      onClick={handleClick}
+      onMouseOver={handleMouseOver}
+    >
+      ★
+    </span>
+  );
 }
 
-function Rating({value=0}) {
-    return (
-        <div>
-            {RATING.map((rating)=>{
-                <Star key={rating} selected={value >= rating}/>
-            })}
-        </div>
-    )
+function Rating({ value = 0, onSelect, onHover, onMouseOut }) {
+  return (
+    <div onMouseOut={onMouseOut}>
+      {RATING.map((rating) => {
+        <Star
+          key={rating}
+          selected={value >= rating}
+          rating={rating}
+          onSelect={onSelect}
+          onHover={onHover}
+        />;
+      })}
+    </div>
+  );
 }
 
 export default Rating;
