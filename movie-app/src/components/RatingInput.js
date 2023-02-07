@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Rating from "./Rating";
-import './RaitingInput.css'
+import './RatingInput.css'
 
 function RatingInput({ name, value, onChange }) {
   const [rating, setRating] = useState(value);
@@ -11,6 +11,7 @@ function RatingInput({ name, value, onChange }) {
 
   return (
     <Rating
+      className="RatingInput"
       value={rating}
       onSelect={handleSelect}
       onHover={setRating}
