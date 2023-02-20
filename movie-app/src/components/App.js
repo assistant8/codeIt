@@ -8,7 +8,7 @@ const LIMIT = 6; //상수
 
 function App({}) {
     const [order, setOrder] = useState("id")
-    const [items, setItems] = useState([]) 
+    const [items, setItems] = useState([]) //리뷰 목록
     const [hasNext, setHasNext] = useState(false) 
     const [offset, setOffset] = useState(0) 
     const [isLoading, setIsLoading] = useState(false)
@@ -53,6 +53,11 @@ function App({}) {
         await handleLoad({order, offset, limit:LIMIT}) //지정 offset~6개 불러옴
     }
 
+    //이 동작은 비동기라서 콜백 형태로 작성해야함
+    const handleSubmitSuccess = (review) => {
+        setItems((prevItems) => [review, ...prevItems])
+    }
+
     useEffect(()=>{
         handleLoad({order, offset:0, limit:LIMIT}); //처음이라 order 변경시에만 발동
     }, [order])
@@ -70,7 +75,7 @@ function App({}) {
                 <button onClick={handleRatingSort}>rating</button>
                 <button onClick={handleIdSort}>id</button>
             </div>
-            <ReviewForm />
+            <ReviewForm onSubmitSuccess={handleSubmitSuccess}/>
             <ReviewList items={sortedItem} onDelete={handleDelete}/> 
             {hasNext && <button disabled={isLoading} onClick={handleLoadMore}>더 보기</button>}
             {loadingError?.message && <span>{loadingError.message}</span>}

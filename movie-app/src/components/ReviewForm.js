@@ -4,7 +4,7 @@ import FileInput from "./FileInput";
 import RatingInput from "./RatingInput";
 import "./ReviewForm.css";
 
-function ReviewForm() {
+function ReviewForm({onSubmitSuccess}) {
   const [isSubmitting, setisSubmitting] = useState(false);
   const [submittingError, setSubmittingError] = useState(null);
   const [values, setValues] = useState({
@@ -37,10 +37,12 @@ function ReviewForm() {
     formData.append("rating", values.rating);
     formData.append("content", values.content);
     formData.append("imgFile", values.imgFile);
+
+    let result
     try {
       setSubmittingError(null);
       setisSubmitting(true);
-      await createReview(formData);
+      result = await createReview(formData);
     } catch (error) {
       setSubmittingError(error);
       return;
@@ -48,6 +50,9 @@ function ReviewForm() {
       setisSubmitting(false);
     }
 
+    const {review} = result
+    onSubmitSuccess(review)
+    
     setValues({
       title: "",
       rating: 0,
