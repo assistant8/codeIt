@@ -5,6 +5,8 @@ import RatingInput from "./RatingInput";
 import "./ReviewForm.css";
 
 function ReviewForm() {
+  const [isSubmitting, setisSubmitting] = useState(false);
+  const [submittingError, setSubmittingError] = useState(null);
   const [values, setValues] = useState({
     title: "",
     rating: 0,
@@ -30,18 +32,28 @@ function ReviewForm() {
   //폼은 초기화
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData()
-    formData.append('title', values.title);
-    formData.append('rating', values.rating);
-    formData.append('content', values.content);
-    formData.append('imgFile', values.imgFile);
-    await createReview(formData)
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("rating", values.rating);
+    formData.append("content", values.content);
+    formData.append("imgFile", values.imgFile);
+    try {
+      setSubmittingError(null);
+      setisSubmitting(true);
+      await createReview(formData);
+    } catch (error) {
+      setSubmittingError(error);
+      return;
+    } finally {
+      setisSubmitting(false);
+    }
+
     setValues({
       title: "",
       rating: 0,
       content: "",
       imgFile: null,
-    })
+    });
   };
 
   return (
@@ -63,7 +75,10 @@ function ReviewForm() {
         value={values.content}
         onChange={handleInputChange}
       />
-      <button type="submit">확인</button>
+      <button disabled={isSubmitting} type="submit">
+        확인
+      </button>
+      {submittingError?.message && <div>{submittingError.message}</div>}
     </form>
   );
 }
