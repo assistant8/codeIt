@@ -2,7 +2,7 @@ import ReviewList from "./ReviewList";
 import mockItems from "../mock.json"
 import { useEffect, useState } from "react";
 import { getReviews } from "../api";
-import ReviewFrom from "./ReviewForm.js"
+import ReviewForm from "./ReviewForm.js"
 
 const LIMIT = 6; //상수
 
@@ -70,7 +70,7 @@ function App({}) {
                 <button onClick={handleRatingSort}>rating</button>
                 <button onClick={handleIdSort}>id</button>
             </div>
-            <ReviewFrom />
+            <ReviewForm />
             <ReviewList items={sortedItem} onDelete={handleDelete}/> 
             {hasNext && <button disabled={isLoading} onClick={handleLoadMore}>더 보기</button>}
             {loadingError?.message && <span>{loadingError.message}</span>}
