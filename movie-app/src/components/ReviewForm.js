@@ -4,7 +4,7 @@ import FileInput from "./FileInput";
 import RatingInput from "./RatingInput";
 import "./ReviewForm.css";
 
-function ReviewForm({onSubmitSuccess}) {
+function ReviewForm({intialValues, onSubmitSuccess, onCancel}) {
   const [isSubmitting, setisSubmitting] = useState(false);
   const [submittingError, setSubmittingError] = useState(null);
   const [values, setValues] = useState({
@@ -83,6 +83,7 @@ function ReviewForm({onSubmitSuccess}) {
       <button disabled={isSubmitting} type="submit">
         확인
       </button>
+      {onCancel && <button onClick={onCancel}>취소</button>} 
       {submittingError?.message && <div>{submittingError.message}</div>}
     </form>
   );

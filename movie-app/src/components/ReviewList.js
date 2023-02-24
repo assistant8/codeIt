@@ -24,14 +24,18 @@ function ReviewListItem ({item, onDelete, onEdit}) { //ReviewList에서 받은 o
 
 function ReviewList ({items, onDelete}) { //App에서 받은 함수 다시 ReviewListItem으로 넘겨줌
     const [editId, setEditId] = useState(null) //수정하는 아이템 id
+    const handleCancel = () => setEditId(null)
+
     return (
         <div>
             <ul>                
                 {items.map((item) => {
                     if(item.id==editId) { //map으로 아이템 펴줄때 수정누른건 리뷰폼 나오도록
+                        const {title, rating, content} = item; //item에서 3개 뽑고
+                        const intialValues = {title, rating, content}; //이 3개를 한 변수에 저장, 리뷰폼에 초기값으로 전달
                         return (
                             <li key={item.id}>
-                              <ReviewForm />  
+                              <ReviewForm intialValues={intialValues} onCancel={handleCancel}/>  
                             </li>
                           );
                     }                        
