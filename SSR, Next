@@ -1,0 +1,64 @@
+하이브리드 느낌으로
+
+처음 브라우저에 접속 시에는 전통적인 방식으로 페이지랑 데이터 모두 가져오고 이후 변동되는 사항은 최신 방식으로 데이터만 벡엔드 서버에서 가져
+
+next - 코드스플릿, ssr 필요없는 속도 상관없는 admin 페이지는 그냥 순수 리액트로
+
+꼭 넥스트로만 서버사이드 렌더링 할 수 있는건 아님
+
+- ssr (전통적인)
+    
+    서버에서 사용자에게 보여줄 페이지를 모두 구성하여 사용자에게 페이지를 보여줌
+    
+    프론트 서버는 자기가 가진 html css와 백엔드 서버에 요청해서 얻은 데이터를 합쳐서 브라우저에게 보내
+    
+    초기 구동 속도 빠름, 이후 interact view 느림
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c6f587a9-3ff3-47cb-9beb-c7d24440e5a3/Untitled.png)
+    
+- csr (spa)
+    - 장단점
+        
+        SSR보다 초기 전송되는 페이지의 속도는 빠르지만 서비스에서 필요한 데이터를 클라이언트(브라우저)에서 추가로 요청하여 재구성해야 하기 때문에 전제적인 페이지 완료 시점은 SSR보다 느려진다.
+        
+    
+    브라우저가 먼저 페이지를 받고 데이터는 로딩 돌아가는 와중에 백엔드 서버에서 직접 데이터 받아옴 
+    
+    초기 로딩 속도 느림, 이후 구동 속도 빠름, 서버 부하 적음
+    
+    검색엔진 이슈 문제
+    
+    리액트, 앵귤러, 뷰 
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/24b2c598-ec8f-4919-a969-e7d167a4fd6f/Untitled.png)
+    
+- csr + ssr = next
+    - ssr이 초기 화면을 가져오는 속도는 느려서 유저 입장 답답할 수도, csr은 데이터 가져오는 중에 로딩 아이콘이라도 띄워줄 수 있음
+    - 리액트(csr) 필요할 때 - 사용자 빠르게 인터랙션 필요할때
+        - 한계
+            
+            구글이 아닌 검색엔진에서는 안에 있는 데이터 읽을 때 로딩만 보이게 되어 검색이 되지 않음 
+            
+            → 서버사이드 렌더링 = 하이브리드
+            
+        - 방문하지도 않을 페이지 admin 등 다 받아오는. 초기 로딩 느림
+            
+            → 코드스플리팅 (방문한 것만 가져오게)
+            
+    - 결국 csr(리액트)을 당연히 사용해야 하는건데 거기에 두 단점을 보완하기 위해 ssr을 도입하는 것
+        
+        이걸 리액트에서 프레임워크로 구현하기 위해 next를 쓰는 것 (갯츠비, nuxt 등도 있음)
+        
+        코드 복잡도 올라가긴함 
+        
+        초기 렌더링은 ssr, 이후는 csr = isomorphic / universal rendering
+        
+- 서비스 성격에 따라
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b62946a9-59f2-4928-9f59-af378212b72b/Untitled.png)
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/54a03c2a-c0cc-437e-a826-32eaca10d015/Untitled.png)
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8fa8640f-fa52-4cd1-b24b-db1213cbd909/Untitled.png)
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ca0bc9cf-c148-4778-a329-b38f70ac8090/Untitled.png)
